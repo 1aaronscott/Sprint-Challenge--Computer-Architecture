@@ -38,7 +38,8 @@ class CPU:
                "JGT": 0b01010111,  # 87
                "JLT": 0b01011000,  # 88
                "JLE": 0b01011001,  # 89
-               "JGE": 0b01011010}  # 90
+               "JGE": 0b01011010,  # 90
+               "ADDI": 0b10101001}  # 90
 
     def __init__(self):
         """Construct a new CPU."""
@@ -90,7 +91,8 @@ class CPU:
                              self.opcodes["JGT"]: self.jgt,
                              self.opcodes["JLT"]: self.jlt,
                              self.opcodes["JLE"]: self.jle,
-                             self.opcodes["JGT"]: self.jgt}
+                             self.opcodes["JGT"]: self.jgt,
+                             self.opcodes["ADDI"]: self.addi}
 
     def call(self):
         ''' CALL register
@@ -249,7 +251,7 @@ class CPU:
         ), end='')
 
         for i in range(8):
-            print(" %02X" % self.reg[i], end='')
+            print(" %02X" % self.register[i], end='')
 
         print()
 
@@ -293,6 +295,11 @@ class CPU:
     def addi(self):
         ''' add a value to that in a register '''
         self.register[self.ram[self.pc+1]] += self.ram[self.pc+2]
+        # self.trace()
+        # print(self.register[self.ram[self.pc+1]])
+        # print(self.ram[self.pc+2])
+        #self.add("ADD", self.register[self.ram[self.pc+1]], self.ram[self.pc+2])
+        #self.alu("ADD", self.ram[self.pc+1], self.ram[self.pc+2])
         self.pc += 3
 
     def ld(self):
